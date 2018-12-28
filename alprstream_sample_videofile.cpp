@@ -50,6 +50,7 @@ int main(int argc, char** argv) {
 
   AlprStream alpr_stream(VIDEO_BUFFER_SIZE, USE_MOTION_DETECTION);
   Alpr alpr(LICENSEPLATE_COUNTRY, "", "", LICENSE_KEY);
+  VehicleClassifier vehicle_classifier("", "", VEHICLEDETECTOR_CPU, 1, 0, "");
 
   if (!alpr.isLoaded())
   {
@@ -85,6 +86,10 @@ int main(int argc, char** argv) {
     cout << "After batching there are: " << alpr_stream.peek_active_groups().size() << " active groups" << endl;
     
     std::vector<AlprGroupResult> group_results = alpr_stream.pop_completed_groups();
+    for (int i = 0; i < group_results.size(); i++)
+    {
+      alpr_stream.recognize_vehicle(&group_results[i], &vehicle_classifier);
+    }
     print_group_results(group_results);
     
 
@@ -118,6 +123,7 @@ void print_group_results(std::vector<AlprGroupResult> groups)
   {
     AlprGroupResult group = groups[group_index];
 
-    cout << "Group (" << group.epoch_ms_time_start << " - " << group.epoch_ms_time_end << ") " << group.best_plate_number << endl;
+    cout << "Group (" << group.epoch_ms_time_start << " - " << group.epoch_ms_time_end << ") " << group.best_plate_number << 
+            " - " << group.vehicle_results.make_top_n[0].value << endl;
   }
 }

@@ -17,6 +17,7 @@ ADD_EXECUTABLE( alprstream_sample_videofile
 TARGET_LINK_LIBRARIES(alprstream_sample_videofile
     alprstream
     openalpr
+    vehicleclassifier
 ) 
 
 

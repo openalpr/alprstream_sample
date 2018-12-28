@@ -12,8 +12,6 @@
 // Import used to list files in directory
 #include <dirent.h>
 
-#include <opencv2/opencv.hpp>
-#include <opencv2/highgui/highgui.hpp>
 
 // Import OpenALPR alprstreamgpu (also pulls in alprgpu.h and alpr.h)
 // Object definitions for individual results are found in alpr.h

@@ -11,7 +11,6 @@ ADD_DEFINITIONS(
  
 
 
-
 ADD_EXECUTABLE( alprstream_sample_videofile
   alprstream_sample_videofile.cpp 
 )
@@ -29,11 +28,15 @@ TARGET_LINK_LIBRARIES(alprstream_sample_videostream
     openalpr
 ) 
 
+FIND_PACKAGE( OpenCV )
+include_directories(${OpenCV_INCLUDE_DIRS})
+
 ADD_EXECUTABLE( alprstream_sample_rawframe
   alprstream_sample_rawframe.cpp 
 )
 TARGET_LINK_LIBRARIES(alprstream_sample_rawframe
     alprstream
     openalpr
-    alpropencv
-) 
+    ${OpenCV_LIBS}
+)
+
